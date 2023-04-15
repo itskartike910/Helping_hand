@@ -5,8 +5,11 @@
 // ignore_for_file: prefer_final_fields
 
 import 'dart:developer';
+import 'package:alert_us/models/user.dart' as model;
+import 'package:alert_us/utils/global_variable.dart';
 
 import 'package:alert_us/utils/location.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +31,8 @@ class _SignUpState extends State<SignUp> {
   TextEditingController cPasswordController = TextEditingController();
   TextEditingController _username = TextEditingController();
   TextEditingController _locationNickname = TextEditingController();
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void checkValues() {
     String email = emailController.text.trim();
@@ -60,6 +65,18 @@ class _SignUpState extends State<SignUp> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+
+      String res = "Some error occured";
+      model.User user = model.User(
+          locationNickname: _locationNickname.text,
+          address: address,
+          username: _username.text);
+
+      await _firestore
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set(user.toJson());
+      res = "success";
       if (userCredential.user != null) {
         Navigator.pop(context);
       }
@@ -69,18 +86,23 @@ class _SignUpState extends State<SignUp> {
     } on FirebaseAuthException catch (ex) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(ex.code.toString())));
-      //  Card(
-      //    child: SnackBar(
-      //     content: Text(ex.code.toString()),
-      //     backgroundColor: Colors.green,
-      //     elevation: 10,
-      //     behavior: SnackBarBehavior.floating,
-      //     margin: const EdgeInsets.all(5),
-      // ),
-      //  );
       log(ex.code.toString());
     }
   }
+
+  // void saveDetails() async {
+  //   String res = "Some error occured";
+  //   model.User user = model.User(
+  //       locationNickname: _locationNickname.text,
+  //       address: address,
+  //       username: _username.text);
+
+  //        await _firestore
+  //           .collection('users')
+  //           .doc(userCredential.user!.uid)
+  //           .set(user.toJson());
+  //       res = "success";
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +169,7 @@ class _SignUpState extends State<SignUp> {
                   height: 15,
                 ),
                 TextField(
-                  controller: emailController,
+                  controller: _locationNickname,
                   decoration: const InputDecoration(
                     labelText: "Enter your location nickname",
                     border: OutlineInputBorder(
@@ -200,7 +222,16 @@ class _SignUpState extends State<SignUp> {
                   height: 20,
                 ),
                 ElevatedButton(
-                    onPressed: () => LocationPage(),
+                    // Navigator.pop(context);
+                    onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LocationPage()))
+                        .then((result) {}),
+                    // onPressed: () => Navigator.of(context).pushReplacement(
+                    //         MaterialPageRoute(builder: (context) {
+                    //       return LocationPage();
+                    //     })),
                     child: const Text('Set your location')),
                 const SizedBox(
                   height: 20,
