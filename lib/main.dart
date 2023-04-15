@@ -1,4 +1,3 @@
-
 import 'package:alert_us/responsive/mobile_screen_layout.dart';
 
 import 'dart:async';
@@ -17,35 +16,32 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:
-      (FirebaseAuth.instance.currentUser !=null)?   const NewHome():const  LoginPage(),
+      home: (FirebaseAuth.instance.currentUser != null)
+          ? const MobileScreenLayout()
+          : const LoginPage(),
     );
   }
 }
 
 class StartingPage extends StatelessWidget {
- const StartingPage({Key? key}) : super(key: key);
+  const StartingPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +49,11 @@ class StartingPage extends StatelessWidget {
       child: Container(
         // child: Image.asset('assets/images/Ecommerce.jpg'),
         // child: Image.asset('images/Ecommerce.jpg',fit: BoxFit.cover,scale: 1.0,),
-        child: const Icon(Icons.start,size: 50,color: Colors.lightGreen,),
+        child: const Icon(
+          Icons.start,
+          size: 50,
+          color: Colors.lightGreen,
+        ),
       ),
     );
   }
