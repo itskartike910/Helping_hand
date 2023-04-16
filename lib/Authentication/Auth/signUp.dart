@@ -7,9 +7,11 @@
 import 'dart:developer';
 import 'package:alert_us/models/user.dart' as model;
 import 'package:alert_us/resources/auth_methods.dart';
+import 'package:alert_us/responsive/mobile_screen_layout.dart';
 import 'package:alert_us/utils/global_variable.dart';
 
 import 'package:alert_us/utils/location.dart';
+import 'package:alert_us/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -105,6 +107,17 @@ class _SignUpState extends State<SignUp> {
       cPassword: cPasswordController.text,
       locationNickname: _locationNickname.text,
     );
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (res != 'success') {
+      showSnackBar(res, context);
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => MobileScreenLayout()),
+      );
+    }
   }
 
   // void saveDetails() async {
