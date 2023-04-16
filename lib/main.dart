@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 
@@ -14,14 +15,28 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'Authentication/Auth/NewHome.dart';
 import 'Authentication/Auth/login.dart';
+import 'Notifications/notifications.dart';
 import 'firebase_options.dart';
+String deviceToken="token";
+bool result=false;
 
 void main() async {
+  // getToken();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+
   runApp(const MyApp());
 }
+
+
+// void getToken() async{
+//   final FirebaseMessaging _fcm=FirebaseMessaging.instance;
+//   final token=await _fcm.getToken();
+//   deviceToken=token.toString();
+//   print("token=$token");
+// }
+
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -29,6 +44,8 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
+
+
 
 class _MyAppState extends State<MyApp> {
   @override
@@ -56,7 +73,7 @@ class _MyAppState extends State<MyApp> {
                 child: CircularProgressIndicator(color: Colors.black),
               );
             }
-            return const LoginPage();
+            return  const LoginPage();
           },
         ),
       ),

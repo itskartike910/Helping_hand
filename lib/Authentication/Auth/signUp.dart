@@ -7,6 +7,8 @@
 import 'dart:developer';
 import 'package:alert_us/models/user.dart' as model;
 import 'package:alert_us/resources/auth_methods.dart';
+import 'package:alert_us/responsive/mobile_screen_layout.dart';
+import 'package:alert_us/screens/home_screen.dart';
 import 'package:alert_us/utils/global_variable.dart';
 
 import 'package:alert_us/utils/location.dart';
@@ -17,6 +19,7 @@ import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../main.dart';
 import 'login.dart';
 
 class SignUp extends StatefulWidget {
@@ -106,20 +109,6 @@ class _SignUpState extends State<SignUp> {
       locationNickname: _locationNickname.text,
     );
   }
-
-  // void saveDetails() async {
-  //   String res = "Some error occured";
-  //   model.User user = model.User(
-  //       locationNickname: _locationNickname.text,
-  //       address: address,
-  //       username: _username.text);
-
-  //        await _firestore
-  //           .collection('users')
-  //           .doc(userCredential.user!.uid)
-  //           .set(user.toJson());
-  //       res = "success";
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -245,10 +234,7 @@ class _SignUpState extends State<SignUp> {
                             MaterialPageRoute(
                                 builder: (context) => LocationPage()))
                         .then((result) {}),
-                    // onPressed: () => Navigator.of(context).pushReplacement(
-                    //         MaterialPageRoute(builder: (context) {
-                    //       return LocationPage();
-                    //     })),
+
                     child: const Text('Set your location')),
                 const SizedBox(
                   height: 20,
@@ -260,6 +246,14 @@ class _SignUpState extends State<SignUp> {
                   ),
                   onPressed: () {
                     signUpUser();
+                    if(result){
+                      Navigator.pop(context);
+                      Navigator.push(context, // Current context
+                          MaterialPageRoute(builder: (context) {
+                            return const MobileScreenLayout();
+                          }));
+
+                    }
                   },
                   child: const Text("Sign Up"),
                 ),
@@ -293,3 +287,5 @@ class _SignUpState extends State<SignUp> {
     );
   }
 }
+
+
