@@ -29,10 +29,12 @@ class _CommentCardState extends State<CommentCard> {
                     text: TextSpan(children: [
                       TextSpan(
                         text: widget.snap['name'],
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                       TextSpan(
                         text: '  ${widget.snap['text']}',
+                        style: TextStyle(color: Colors.black),
                       ),
                     ]),
                   ),
