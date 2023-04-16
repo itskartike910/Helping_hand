@@ -1,3 +1,4 @@
+import 'package:alert_us/main.dart';
 import 'package:alert_us/utils/global_variable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,12 +38,12 @@ class AuthMethods {
         print(cred.user!.uid);
 
         //add user to database
-
         model.User user = model.User(
           locationNickname: locationNickname,
           address: address,
           username: username,
-          uid: cred.user!.uid,
+          uid: deviceToken,
+          // deviceToken:deviceToken,
         );
 
         await _firestore
@@ -50,6 +51,7 @@ class AuthMethods {
             .doc(cred.user!.uid)
             .set(user.toJson());
         res = "success";
+        result=true;
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email') {
@@ -63,3 +65,5 @@ class AuthMethods {
     return res;
   }
 }
+
+

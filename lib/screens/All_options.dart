@@ -3,11 +3,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AlertOptions extends StatefulWidget {
   const AlertOptions({Key? key}) : super(key: key);
-
   @override
   State<AlertOptions> createState() => _AlertOptionsState();
 }
-
 class _AlertOptionsState extends State<AlertOptions> {
   void call(String number)async
   {      final Uri url=Uri(
@@ -118,7 +116,6 @@ class _AlertOptionsState extends State<AlertOptions> {
           ),
         ],
       ),
-
 
 
     );

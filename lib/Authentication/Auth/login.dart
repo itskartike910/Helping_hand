@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'package:alert_us/Authentication/Auth/signUp.dart';
+import 'package:alert_us/main.dart';
 import 'package:alert_us/responsive/mobile_screen_layout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'NewHome.dart';
@@ -49,6 +51,12 @@ class LoginPageState extends State<LoginPage> {
     }
   }
 
+  Future<void> getDeviceTokenToSendNotification()async{
+    final FirebaseMessaging _fcm=FirebaseMessaging.instance;
+    final token=await _fcm.getToken();
+    deviceToken=token.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,6 +89,7 @@ class LoginPageState extends State<LoginPage> {
                       style: TextStyle(fontSize: 16),
                     ),
                     onPressed: () {
+                      getDeviceTokenToSendNotification();
                       Navigator.push(context, // Current context
                           MaterialPageRoute(builder: (context) {
                         return const SignUp();

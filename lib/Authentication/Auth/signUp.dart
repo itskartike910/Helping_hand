@@ -1,6 +1,6 @@
 // import 'package:chat_app/Models/UserModel.dart';
 // import 'package:chat_app/pages/CompleteProfile.dart';
-// import 'package:chat_app/pages/LoginPage.dart';
+// import 'package:chhttps://github.com/AnshumaliSuri/byteverse_helping_hand/pull/10/conflict?name=lib%252FAuthentication%252FAuth%252FsignUp.dart&ancestor_oid=49db26c6c8b265c49bb181b0ffaff3d3ccae0fe4&base_oid=a6fa4fb0b80644c51dd037c3ebcb0639c4664594&head_oid=1079da4addf439fb8fd1b5869533d68c017cd9a1at_app/pages/LoginPage.dart';
 // import 'package:chat_app/pages/UploadImmage.dart';
 // ignore_for_file: prefer_final_fields
 
@@ -8,6 +8,8 @@ import 'dart:developer';
 import 'package:alert_us/models/user.dart' as model;
 import 'package:alert_us/resources/auth_methods.dart';
 import 'package:alert_us/responsive/mobile_screen_layout.dart';
+
+import 'package:alert_us/screens/home_screen.dart';
 import 'package:alert_us/utils/global_variable.dart';
 
 import 'package:alert_us/utils/location.dart';
@@ -19,6 +21,7 @@ import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../main.dart';
 import 'login.dart';
 
 class SignUp extends StatefulWidget {
@@ -119,20 +122,6 @@ class _SignUpState extends State<SignUp> {
       );
     }
   }
-
-  // void saveDetails() async {
-  //   String res = "Some error occured";
-  //   model.User user = model.User(
-  //       locationNickname: _locationNickname.text,
-  //       address: address,
-  //       username: _username.text);
-
-  //        await _firestore
-  //           .collection('users')
-  //           .doc(userCredential.user!.uid)
-  //           .set(user.toJson());
-  //       res = "success";
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -258,10 +247,7 @@ class _SignUpState extends State<SignUp> {
                             MaterialPageRoute(
                                 builder: (context) => LocationPage()))
                         .then((result) {}),
-                    // onPressed: () => Navigator.of(context).pushReplacement(
-                    //         MaterialPageRoute(builder: (context) {
-                    //       return LocationPage();
-                    //     })),
+
                     child: const Text('Set your location')),
                 const SizedBox(
                   height: 20,
@@ -273,6 +259,14 @@ class _SignUpState extends State<SignUp> {
                   ),
                   onPressed: () {
                     signUpUser();
+                    if(result){
+                      Navigator.pop(context);
+                      Navigator.push(context, // Current context
+                          MaterialPageRoute(builder: (context) {
+                            return const MobileScreenLayout();
+                          }));
+
+                    }
                   },
                   child: const Text("Sign Up"),
                 ),
@@ -306,3 +300,5 @@ class _SignUpState extends State<SignUp> {
     );
   }
 }
+
+
