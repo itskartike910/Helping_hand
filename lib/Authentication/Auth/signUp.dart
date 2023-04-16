@@ -6,6 +6,7 @@
 
 import 'dart:developer';
 import 'package:alert_us/models/user.dart' as model;
+import 'package:alert_us/resources/auth_methods.dart';
 import 'package:alert_us/utils/global_variable.dart';
 
 import 'package:alert_us/utils/location.dart';
@@ -34,60 +35,76 @@ class _SignUpState extends State<SignUp> {
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  void checkValues() {
-    String email = emailController.text.trim();
-    String password = passwordController.text.trim();
-    String cPassword = cPasswordController.text.trim();
-    String username = _username.text.trim();
-    String locationNickname = _locationNickname.text.trim();
-    if (email == "" ||
-        password == "" ||
-        cPassword == "" ||
-        username == "" ||
-        locationNickname == "") {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-        "Please fill all the field",
-        style: TextStyle(backgroundColor: Colors.red),
-      )));
-      log("Please fill all the field");
-    } else if (password != cPassword) {
-      log("Password do not match");
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Password do not match")));
-      //
-    } else {
-      signUp(email, password);
-    }
-  }
+  // void checkValues() {
+  //   String email = emailController.text.trim();
+  //   String password = passwordController.text.trim();
+  //   String cPassword = cPasswordController.text.trim();
+  //   String username = _username.text.trim();
+  //   String locationNickname = _locationNickname.text.trim();
+  //   if (email == "" ||
+  //       password == "" ||
+  //       cPassword == "" ||
+  //       username == "" ||
+  //       locationNickname == "") {
+  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  //         content: Text(
+  //       "Please fill all the field",
+  //       style: TextStyle(backgroundColor: Colors.red),
+  //     )));
+  //     log("Please fill all the field");
+  //   } else if (password != cPassword) {
+  //     log("Password do not match");
+  //     ScaffoldMessenger.of(context)
+  //         .showSnackBar(const SnackBar(content: Text("Password do not match")));
+  //     //
+  //   } else {
+  //     signUp(email, password);
+  //   }
+  // }
 
-  void signUp(String email, String password) async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+  // void signUp(String email, String password) async {
+  //   try {
+  //     UserCredential userCredential = await FirebaseAuth.instance
+  //         .createUserWithEmailAndPassword(email: email, password: password);
 
-      String res = "Some error occured";
-      model.User user = model.User(
-          locationNickname: _locationNickname.text,
-          address: address,
-          username: _username.text);
+  //     String res = "Some error occured";
+  //     model.User user = model.User(
+  //       locationNickname: _locationNickname.text,
+  //       address: address,
+  //       username: _username.text,
+  //       uid: userCredential.user!.uid,
+  //     );
 
-      await _firestore
-          .collection('users')
-          .doc(userCredential.user!.uid)
-          .set(user.toJson());
-      res = "success";
-      if (userCredential.user != null) {
-        Navigator.pop(context);
-      }
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("User Created you can login ")));
-      // log("User Created");
-    } on FirebaseAuthException catch (ex) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(ex.code.toString())));
-      log(ex.code.toString());
-    }
+  //     await _firestore
+  //         .collection('users')
+  //         .doc(userCredential.user!.uid)
+  //         .set(user.toJson());
+  //     res = "success";
+  //     if (userCredential.user != null) {
+  //       Navigator.pop(context);
+  //     }
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(content: Text("User Created you can login ")));
+  //     // log("User Created");
+  //   } on FirebaseAuthException catch (ex) {
+  //     ScaffoldMessenger.of(context)
+  //         .showSnackBar(SnackBar(content: Text(ex.code.toString())));
+  //     log(ex.code.toString());
+  //   }
+  // }
+
+  bool _isLoading = false;
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().signUpUser(
+      email: emailController.text,
+      password: passwordController.text,
+      username: _username.text,
+      cPassword: cPasswordController.text,
+      locationNickname: _locationNickname.text,
+    );
   }
 
   // void saveDetails() async {
@@ -242,7 +259,7 @@ class _SignUpState extends State<SignUp> {
                     minimumSize: const Size.fromHeight(50), // NEW
                   ),
                   onPressed: () {
-                    checkValues();
+                    signUpUser();
                   },
                   child: const Text("Sign Up"),
                 ),
