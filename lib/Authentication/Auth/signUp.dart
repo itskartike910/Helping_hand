@@ -1,6 +1,6 @@
 // import 'package:chat_app/Models/UserModel.dart';
 // import 'package:chat_app/pages/CompleteProfile.dart';
-// import 'package:chat_app/pages/LoginPage.dart';
+// import 'package:chhttps://github.com/AnshumaliSuri/byteverse_helping_hand/pull/10/conflict?name=lib%252FAuthentication%252FAuth%252FsignUp.dart&ancestor_oid=49db26c6c8b265c49bb181b0ffaff3d3ccae0fe4&base_oid=a6fa4fb0b80644c51dd037c3ebcb0639c4664594&head_oid=1079da4addf439fb8fd1b5869533d68c017cd9a1at_app/pages/LoginPage.dart';
 // import 'package:chat_app/pages/UploadImmage.dart';
 // ignore_for_file: prefer_final_fields
 
@@ -8,10 +8,12 @@ import 'dart:developer';
 import 'package:alert_us/models/user.dart' as model;
 import 'package:alert_us/resources/auth_methods.dart';
 import 'package:alert_us/responsive/mobile_screen_layout.dart';
+
 import 'package:alert_us/screens/home_screen.dart';
 import 'package:alert_us/utils/global_variable.dart';
 
 import 'package:alert_us/utils/location.dart';
+import 'package:alert_us/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -108,6 +110,17 @@ class _SignUpState extends State<SignUp> {
       cPassword: cPasswordController.text,
       locationNickname: _locationNickname.text,
     );
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (res != 'success') {
+      showSnackBar(res, context);
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => MobileScreenLayout()),
+      );
+    }
   }
 
   @override

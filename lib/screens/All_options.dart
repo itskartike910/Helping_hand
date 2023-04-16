@@ -15,7 +15,7 @@ class _AlertOptionsState extends State<AlertOptions> {
   if(await canLaunchUrl(url)){
     await launchUrl(url);
   }else{
-    print("can not launch url");
+    // print("can not launch url");
   }
   }
 

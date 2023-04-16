@@ -20,6 +20,7 @@ class _NewsScreenState extends State<NewsScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: false,
+        shadowColor: Colors.cyan,
         title: const Text('Recent NEWS'),
         actions: [
           ElevatedButton.icon(
