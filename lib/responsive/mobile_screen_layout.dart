@@ -1,5 +1,7 @@
+import 'package:alert_us/provider/user_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/global_variable.dart';
 
@@ -11,8 +13,15 @@ class MobileScreenLayout extends StatefulWidget {
 }
 
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
+  addData() async {
+    UserProvider _userProvider = Provider.of(context, listen: false);
+    await _userProvider.refreshUser();
+  }
+
   void initState() {
+    addData();
     super.initState();
+
     pageController = PageController();
   }
 
