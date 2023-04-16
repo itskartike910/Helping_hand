@@ -43,16 +43,14 @@ dependencies:
   firebase_storage: ^11.1.0
   uuid: ^3.0.7
   location_picker_flutter_map: ^1.1.0
-<<<<<<< HEAD
   http: ^0.13.5
   flutter_local_notifications: ^13.0.0
   firebase_messaging: ^14.4.0
   firebase_analytics: ^10.2.0
   firebase_in_app_messaging: ^0.7.1
-=======
   provider: ^6.0.5
   intl: ^0.17.0
->>>>>>> 889afda972e1e849b6c9bfd09e977c17bb615d81
+  url_launcher: ^6.1.10
 
 dev_dependencies:
   flutter_test:

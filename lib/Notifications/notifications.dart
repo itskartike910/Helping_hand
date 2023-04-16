@@ -1,10 +1,8 @@
-
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart'as http;
-
 import '../main.dart';
 
 class Notifications extends StatefulWidget {
@@ -89,7 +87,6 @@ class _NotificationsState extends State<Notifications> {
     );
     print("message send");
   }
-
 
 
   @override

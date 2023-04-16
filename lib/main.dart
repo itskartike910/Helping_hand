@@ -11,30 +11,14 @@ import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-<<<<<<< HEAD
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-=======
 import 'package:provider/provider.dart';
->>>>>>> 889afda972e1e849b6c9bfd09e977c17bb615d81
 import 'Authentication/Auth/NewHome.dart';
 import 'Authentication/Auth/login.dart';
-import 'Notifications/notifications.dart';
 import 'firebase_options.dart';
-FlutterLocalNotificationsPlugin notificationsPlugin=FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await FlutterNotificationService().init();
-
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  log("Notifications");
-  AndroidInitializationSettings androidInitializationSettings= const AndroidInitializationSettings("@mipmap/ic_launcher");
-  InitializationSettings initializationSettings=InitializationSettings(android: androidInitializationSettings);
-  bool? initialized = await notificationsPlugin.initialize(
-    initializationSettings,
-  );
-  log("Notifications=$initialized");
 
   runApp(const MyApp());
 }
@@ -46,38 +30,9 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:
-      Notifications(),
-      // (FirebaseAuth.instance.currentUser != null)
-      //     ? const MobileScreenLayout()
-      //     : const LoginPage(),
-    );
-  }
-}
-
-
-
-
-class StartingPage extends StatelessWidget {
-  const StartingPage({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        // child: Image.asset('assets/images/Ecommerce.jpg'),
-        // child: Image.asset('images/Ecommerce.jpg',fit: BoxFit.cover,scale: 1.0,),
-        child: const Icon(
-          Icons.start,
-          size: 50,
-          color: Colors.lightGreen,
-=======
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
@@ -103,7 +58,6 @@ class StartingPage extends StatelessWidget {
             }
             return const LoginPage();
           },
->>>>>>> 889afda972e1e849b6c9bfd09e977c17bb615d81
         ),
       ),
     );
